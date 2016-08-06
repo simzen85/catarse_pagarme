@@ -1,7 +1,7 @@
 module CatarsePagarme
   class PaymentEngine
     def name
-      'Pagarme'
+      'COD'
     end
 
     def review_path contribution
@@ -9,7 +9,7 @@ module CatarsePagarme
     end
 
     def locale
-      'pt'
+      'en'
     end
 
     def can_do_refund?

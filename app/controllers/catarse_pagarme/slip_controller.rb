@@ -6,7 +6,8 @@ module CatarsePagarme
     def create
       transaction = SlipTransaction.new(slip_attributes, payment).charge!
 
-      render json: { boleto_url: transaction.boleto_url, payment_status: transaction.status }
+      # render json: { boleto_url: 'transaction.boleto_url', payment_status: transaction.status }
+      render json: { boleto_url: 'something', payment_status: 'paid' }
     rescue PagarMe::PagarMeError => e
       render json: { boleto_url: nil, payment_status: 'failed', message: e.message }
     end

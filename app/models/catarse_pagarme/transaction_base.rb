@@ -12,9 +12,14 @@ module CatarsePagarme
     def change_payment_state
       self.payment.update_attributes(attributes_to_payment)
       self.payment.save!
-      delegator.update_transaction
+      # delegator.update_transaction
       self.payment.payment_notifications.create(contribution_id: self.payment.contribution_id, extra_data: self.transaction.to_json)
       delegator.change_status_by_transaction(self.transaction.status)
+    end
+
+    def force_pay
+      self.payment.update_attributes(attributes_to_force_pay)
+      self.payment.save!
     end
 
     def payment_method
@@ -28,6 +33,13 @@ module CatarsePagarme
         gateway: 'Pagarme',
         gateway_data: self.transaction.to_json,
         installments: default_installments
+      }
+    end
+
+    def attributes_to_force_pay
+      {
+        state: 'paid',
+        paid_at: Time.now
       }
     end
 
